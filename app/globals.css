@@ -23,9 +23,13 @@
 }
 
 @utility text-heading {
-    @apply font-sans font-bold tracking-tight text-foreground;
+    @apply font-sans font-medium tracking-tight text-foreground;
 }
 
 @utility text-body {
     @apply font-mono font-light text-foreground;
+}
+
+@utility link {
+    @apply decoration-dotted hover:underline;
 }

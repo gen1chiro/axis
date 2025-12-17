@@ -18,13 +18,13 @@ const Nav = () => {
             </Link>
             <div className='hidden sm:block'>
                 <ul className='flex gap-6'>
-                    <li className='decoration-dotted hover:underline'>
+                    <li className='link'>
                         <Link href={'/features'}>Features</Link>
                     </li>
-                    <li className='decoration-dotted hover:underline'>
+                    <li className='link'>
                         <Link href={'/pricing'}>Pricing</Link>
                     </li>
-                    <li className='decoration-dotted hover:underline'>
+                    <li className='link'>
                         <Link href={'/faq'}>FAQ</Link>
                     </li>
                 </ul>
