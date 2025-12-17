@@ -4,7 +4,7 @@ import axisLogo from '@/public/images/axis-logo.png';
 
 const Nav = () => {
     return (
-        <nav className='sticky z-50 top-4 w-11/12 max-w-2xl flex justify-between items-center text-body text-background bg-zinc-900 rounded-sm p-2 mt-4 text-sm'>
+        <nav className='sticky z-50 top-4 w-11/12 max-w-2xl flex justify-between items-center text-body text-background bg-zinc-900 rounded-sm p-2 mt-4 text-xs'>
             <Link
                 href={'/'}
                 className='flex items-center justify-center'

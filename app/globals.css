@@ -18,6 +18,10 @@
     }
 }
 
+@utility w-responsive {
+    @apply w-11/12 max-w-7xl mx-auto;
+}
+
 @utility text-heading {
     @apply font-sans font-bold tracking-tight text-foreground;
 }
