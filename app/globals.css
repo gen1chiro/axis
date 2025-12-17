@@ -1,20 +1,27 @@
 @import "tailwindcss";
 
+:root {
+    --bg-background: #ede9e5;
+    --bg-foreground: #242422;
+}
+
 @theme inline {
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains-mono);
+    --color-background: var(--bg-background);
+    --color-foreground: var(--bg-foreground);
+    --font-sans: var(--font-inter);
+    --font-mono: var(--font-jetbrains-mono);
 }
 
 @layer base {
     body {
-        @apply min-h-screen flex flex-col items-center justify-center gap-4;
+        @apply min-h-screen bg-background;
     }
 }
 
 @utility text-heading {
-    @apply font-sans font-bold tracking-tight;
+    @apply font-sans font-bold tracking-tight text-foreground;
 }
 
 @utility text-body {
-    @apply font-mono font-light;
+    @apply font-mono font-light text-foreground;
 }
