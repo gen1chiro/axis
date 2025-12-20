@@ -50,7 +50,7 @@ const FeaturesPage = () => {
     ];
 
     return (
-        <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+        <main className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8 flex flex-col items-start justify-center gap-4">
                     <div className="flex justify-center items-center gap-2">
@@ -80,7 +80,7 @@ const FeaturesPage = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
 
