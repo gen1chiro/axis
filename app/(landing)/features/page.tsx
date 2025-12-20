@@ -1,4 +1,4 @@
-import FeatureCard from '@/components/featture-card';
+import FeatureCard from '@/components/feature-card';
 import {
     FiCheckCircle,
     FiLayout,
