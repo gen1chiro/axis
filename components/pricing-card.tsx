@@ -56,7 +56,7 @@ const PricingCard = ({ title, price, annualPrice, isAnnual, period, description,
 
             <a
                 href={buttonLink}
-                className={`block w-full text-center py-3 px-6 rounded-sm text-heading transition-colors ${
+                className={`block w-full text-center py-2 px-6 rounded-sm text-heading transition-colors ${
                     highlighted
                         ? 'bg-stone-200 text-foreground hover:bg-stone-300'
                         : 'bg-foreground text-white hover:bg-zinc-800'

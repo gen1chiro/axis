@@ -14,8 +14,8 @@ const SignUpPage = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center px-4 py-16">
-            <div className="w-full max-w-md">
+        <main className="min-h-dvh bg-background flex items-center justify-center px-4 py-16">
+            <div className="w-full max-w-md z-10">
                 {/* Form */}
                 <div className="bg-stone-200 rounded-lg p-4 border border-stone-300">
                     <div className="flex flex-col items-start justify-center gap-4 mb-8">
@@ -141,7 +141,16 @@ const SignUpPage = () => {
                     </p>
                 </div>
             </div>
-        </div>
+            <div
+                className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none"
+                style={{
+                    backgroundImage: `radial-gradient(circle, rgba(120, 113, 108, 0.3) 1px, transparent 1px)`,
+                    backgroundSize: '12px 12px',
+                    maskImage: 'linear-gradient(to top, black 0%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 100%)'
+                }}
+            />
+        </main>
     );
 };
 

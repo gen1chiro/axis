@@ -113,7 +113,7 @@ const PricingPage = () => {
                     Contact our sales team to discuss your specific requirements.
                 </p>
                 <a
-                    className="inline-flex items-center justify-center py-3 px-6 rounded-sm text-heading text-white bg-zinc-900 hover:bg-zinc-800 transition-colors"
+                    className="inline-flex items-center justify-center py-1 px-6 rounded-sm text-heading text-white bg-zinc-900 hover:bg-zinc-800 transition-colors"
                 >
                     Contact Sales
                 </a>

@@ -80,7 +80,7 @@ export default function FAQPage() {
                         Can't find the answer you're looking for? Please reach out to our support team.
                     </p>
                     <a
-                        className="inline-flex items-center justify-center py-3 px-6 rounded-sm text-heading text-white bg-zinc-900 hover:bg-zinc-800 transition-colors"
+                        className="inline-flex items-center justify-center py-1 px-6 rounded-sm text-heading text-white bg-zinc-900 hover:bg-zinc-800 transition-colors"
                     >
                         Contact Support
                     </a>
