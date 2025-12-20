@@ -1,7 +1,7 @@
 
 const FaqPage = () => {
     return (
-        <div className='text-heading'>FAQ page</div>
+        <main className='min-h-screen text-heading'>FAQ page</main>
     )
 }
 

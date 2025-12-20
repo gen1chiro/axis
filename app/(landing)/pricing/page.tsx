@@ -1,7 +1,7 @@
 
 const PricingPage = () => {
     return (
-        <div className='text-heading'>Pricing page</div>
+        <main className='min-h-screen text-heading'>Pricing page</main>
     )
 }
 
