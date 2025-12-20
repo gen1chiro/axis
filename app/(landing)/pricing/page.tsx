@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import PricingCard from '@/components/pricing-card';
 
-export default function PricingPage() {
+const PricingPage = () => {
     const [isAnnual, setIsAnnual] = useState(false);
 
     return (
@@ -130,3 +130,5 @@ export default function PricingPage() {
         </main>
     );
 }
+
+export default PricingPage;
