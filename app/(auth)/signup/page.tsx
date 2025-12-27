@@ -1,17 +1,43 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useActionState } from 'react';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import Link from "next/link";
 import axisLogo from '@/public/images/axis-logo.png';
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
+import { ActionResponse, signUp } from '@/app/actions/auth';
+
+const initialState: ActionResponse = {
+    success: false,
+    message: '',
+    errors: undefined,
+}
 
 const SignUpPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const router = useRouter();
+
+    const [state, formAction, isPending] = useActionState<ActionResponse, FormData>
+    (
+        async (_, formData: FormData) => {
+            try {
+                const result = await signUp(formData)
+
+                if (result.success) {
+                    router.push('/dashboard')
+                }
+
+                return result
+            } catch (err) {
+                return {
+                    success: false,
+                    message: (err as Error).message || 'An error occurred',
+                    errors: undefined,
+                }
+            }
+    }, initialState)
 
     return (
         <main className="min-h-dvh bg-background flex items-center justify-center px-4 py-16">
@@ -33,9 +59,19 @@ const SignUpPage = () => {
                                 Create Account
                             </h1>
                         </div>
+                        {
+                            !state.success && state.message && (
+                                <div className='w-full bg-red-100 border border-red-400 text-red-700 text-body p-2 rounded-xs text-xs'>
+                                    {state.message}
+                                </div>
+                            )
+                        }
                     </div>
 
-                    <div className="space-y-6">
+                    <form
+                        action={formAction}
+                        className="space-y-6"
+                    >
                         <div>
                             <label htmlFor="signup-email" className="block text-xs text-body mb-2">
                                 Email Address
@@ -47,12 +83,18 @@ const SignUpPage = () => {
                                 <input
                                     type="email"
                                     id="signup-email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="block w-full text-heading text-sm pl-10 pr-3 py-3 border border-stone-300 rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-stone-100"
+                                    name='email'
+                                    className={`block w-full text-heading text-sm pl-10 pr-3 py-3 border rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-stone-100 ${state.errors?.email ? 'border-red-200' : 'border-stone-300'} `}
                                     placeholder="you@example.com"
                                 />
                             </div>
+                            {
+                                state.errors?.email && (
+                                    <p className="mt-1 text-xs text-body text-red-600">
+                                        {state.errors.email[0]}
+                                    </p>
+                                )
+                            }
                         </div>
 
                         <div>
@@ -66,9 +108,8 @@ const SignUpPage = () => {
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     id="signup-password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="block w-full text-heading text-sm pl-10 pr-10 py-3 border border-stone-300 rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-stone-100"
+                                    name='password'
+                                    className={`block w-full text-heading text-sm pl-10 pr-3 py-3 border rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-stone-100 ${state.errors?.password ? 'border-red-200' : 'border-stone-300'} `}
                                     placeholder="••••••••"
                                 />
                                 <button
@@ -83,6 +124,13 @@ const SignUpPage = () => {
                                     )}
                                 </button>
                             </div>
+                            {
+                                state.errors?.password && (
+                                    <p className="mt-1 text-xs text-body text-red-600">
+                                        {state.errors.password[0]}
+                                    </p>
+                                )
+                            }
                         </div>
 
                         <div>
@@ -96,9 +144,8 @@ const SignUpPage = () => {
                                 <input
                                     type={showConfirmPassword ? "text" : "password"}
                                     id="confirm-password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    className="block w-full text-heading text-sm pl-10 pr-10 py-3 border border-stone-300 rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-stone-100"
+                                    name='confirmPassword'
+                                    className={`block w-full text-heading text-sm pl-10 pr-3 py-3 border rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-stone-100 ${state.errors?.confirmPassword ? 'border-red-200' : 'border-stone-300'} `}
                                     placeholder="••••••••"
                                 />
                                 <button
@@ -113,14 +160,23 @@ const SignUpPage = () => {
                                     )}
                                 </button>
                             </div>
+                            {
+                                state.errors?.confirmPassword && (
+                                    <p className="mt-1 text-xs text-body text-red-600">
+                                        {state.errors.confirmPassword[0]}
+                                    </p>
+                                )
+                            }
                         </div>
 
                         <button
+                            type='submit'
+                            disabled={isPending}
                             className="w-full bg-zinc-900 text-heading text-white py-2 text-sm rounded-sm hover:bg-zinc-800 transition-colors"
                         >
                             Create Account
                         </button>
-                    </div>
+                    </form>
 
                     <div className="mt-6 mb-6">
                         <div className="relative">
