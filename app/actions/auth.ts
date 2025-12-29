@@ -7,6 +7,7 @@ import {
     SignUpData
 } from "@/lib/schemas/auth";
 import { verifyPassword } from "@/lib/utils";
+import { createSession, destroySession } from "@/lib/auth";
 import { createUser, getUserByEmail } from "@/lib/dal";
 import { redirect } from "next/navigation";
 
@@ -58,8 +59,7 @@ export const signIn = async (formData: FormData): Promise<ActionResponse> => {
             }
         }
 
-        //TODO
-        // create user session
+        await createSession(user.id);
 
         return {
             success: true,
@@ -115,8 +115,7 @@ export const signUp = async (formData: FormData): Promise<ActionResponse> => {
             }
         }
 
-        //TODO
-        // create user session
+        await createSession(user.id as string);
 
         return {
             success: true,
@@ -133,7 +132,11 @@ export const signUp = async (formData: FormData): Promise<ActionResponse> => {
 }
 
 export const signOut = async () => {
-    //TODO
-    // destroy user session
-    redirect('/signin');
+    try {
+        await destroySession();
+    } catch (error) {
+        console.error('Error signing out:', error);
+    } finally {
+        redirect('/signin');
+    }
 }
