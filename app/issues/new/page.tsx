@@ -4,3 +4,5 @@ const NewIssuePage = () => {
         <div className='text-heading'>New issue page</div>
     )
 }
+
+export default NewIssuePage;

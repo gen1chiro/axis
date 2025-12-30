@@ -8,9 +8,10 @@ type FeatureCardProps = {
         sm: string;
         lg: string;
     }
+    isComingSoon: boolean;
 }
 
-const FeatureCard = ({icon: Icon, title, description, colspan}: FeatureCardProps) => {
+const FeatureCard = ({icon: Icon, title, description, colspan, isComingSoon}: FeatureCardProps) => {
 
     return (
         <div className={`relative bg-stone-200 rounded-md p-4 pb-8 h-48 border border-stone-300 text-foreground ${colspan.sm} ${colspan.lg}`}>
@@ -21,9 +22,16 @@ const FeatureCard = ({icon: Icon, title, description, colspan}: FeatureCardProps
                     </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                    <h3 className="text-lg text-heading mb-2">
-                        {title}
-                    </h3>
+                    <div className='flex items-center justify-start gap-2 mb-2'>
+                        <h3 className="text-lg text-heading">
+                            {title}
+                        </h3>
+                        {
+                            isComingSoon && (
+                                <div className='px-1 py-[2px] text-body bg-purple-400 rounded-full text-center text-[10px]'>soon</div>
+                            )
+                        }
+                    </div>
                     <p className="text-body text-sm">
                         {description}
                     </p>

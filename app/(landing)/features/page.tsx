@@ -15,37 +15,43 @@ const FeaturesPage = () => {
             icon: FiCheckCircle,
             title: "Issue Tracking",
             description: "Create, assign, and track issues with ease. Set priorities, due dates, and statuses to keep your team on track.",
-            colspan: { sm: "col-span-1", lg: "lg:col-span-2" }
+            colspan: { sm: "col-span-1", lg: "lg:col-span-2" },
+            isComingSoon: false
         },
         {
             icon: FiLayout,
             title: "Intuitive UI",
             description: "A clean, modern interface that makes project management a breeze. No clutter, just what you need to get work done.",
-            colspan: { sm: "col-span-1", lg: "lg:col-span-1" }
+            colspan: { sm: "col-span-1", lg: "lg:col-span-1" },
+            isComingSoon: false
         },
         {
             icon: FiUsers,
             title: "Collaboration",
             description: "Work together seamlessly. Comment on issues, mention team members, and keep everyone in the loop.",
-            colspan: { sm: "col-span-1", lg: "lg:col-span-1" }
+            colspan: { sm: "col-span-1", lg: "lg:col-span-1" },
+            isComingSoon: true
         },
         {
             icon: FiSliders,
             title: "Custom Workflows",
             description: "Create workflows that match your team's process. Customize statuses, labels, and more.",
-            colspan: { sm: "col-span-1", lg: "lg:col-span-2" }
+            colspan: { sm: "col-span-1", lg: "lg:col-span-2" },
+            isComingSoon: false
         },
         {
             icon: FiZap,
             title: "Real-time Updates",
             description: "See changes as they happen. No need to refresh or wait for updates.",
-            colspan: { sm: "col-span-1", lg: "lg:col-span-2" }
+            colspan: { sm: "col-span-1", lg: "lg:col-span-2" },
+            isComingSoon: true
         },
         {
             icon: FiSearch,
             title: "Powerful Search",
             description: "Find anything instantly with our powerful search. Filter by assignee, status, priority, and more.",
-            colspan: { sm: "col-span-1", lg: "lg:col-span-1" }
+            colspan: { sm: "col-span-1", lg: "lg:col-span-1" },
+            isComingSoon: true
         }
     ];
 
@@ -76,6 +82,7 @@ const FeaturesPage = () => {
                             title={feature.title}
                             description={feature.description}
                             colspan={feature.colspan}
+                            isComingSoon={feature.isComingSoon}
                         />
                     ))}
                 </div>
