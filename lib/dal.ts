@@ -25,7 +25,7 @@ export const createUser = async (email: string, password: string): Promise<Parti
     }
 }
 
-export const requireAuthenticatedUser = async (): Promise<Partial<User> | null> => {
+export const requireAuthenticatedUser = async (): Promise<Partial<User>> => {
     const session = await getSession();
 
     if (!session) redirect('/signin');
@@ -35,12 +35,12 @@ export const requireAuthenticatedUser = async (): Promise<Partial<User> | null> 
             where: eq(users.id, session.userId),
         })
 
-        if (!result) return null;
+        if (!result) throw new Error('User not found');
 
         return { id: result.id, email: result.email };
     } catch (error) {
         console.error(error);
-        return null;
+        throw error;
     }
 }
 
@@ -99,16 +99,16 @@ export const deleteIssue = async (id: number) => {
     }
 }
 
-export const getUserIssues = async (userId: string): Promise<Issue[] | null> => {
+export const getUserIssues = async (userId: string): Promise<Issue[]> => {
     try {
         const userIssues = await db.query.issues.findMany({
-            where: eq(users.id, userId),
+            where: eq(issues.userId, userId),
             orderBy: desc(issues.createdAt),
         })
 
-        return userIssues ?? null;
+        return userIssues ?? [];
     } catch (error) {
         console.error(error);
-        return null;
+        throw new Error('Failed to fetch user issues');
     }
 }
