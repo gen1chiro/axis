@@ -5,7 +5,7 @@ import { MdAdd } from "react-icons/md";
 import { GoHome } from "react-icons/go";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
-import React, {Suspense} from "react";
+import React, { Suspense } from "react";
 import UserEmail from "@/components/user-email";
 
 const DashboardNav = () => {
@@ -47,7 +47,7 @@ const DashboardNav = () => {
                 <div className="w-full border-t border-dotted border-stone-400" />
                 <div className="hidden lg:flex justify-center items-center gap-3 px-3 py-2 text-body bg-stone-100 rounded-sm shadow-sm">
                     <FiUser className="w-4 h-4" />
-                    <Suspense fallback={<div className='text-stone-500'>...loading</div>}>
+                    <Suspense fallback={<div className='text-stone-500 text-xs'>...loading</div>}>
                         <UserEmail />
                     </Suspense>
                 </div>

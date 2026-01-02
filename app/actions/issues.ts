@@ -8,15 +8,15 @@ import {
 } from "@/lib/schemas/issues";
 import { ActionResponse } from "@/app/actions/auth";
 import {
-    requireAuthenticatedUser,
     createIssue as saveIssueToDB,
     updateIssue as updateIssueInDB,
     deleteIssue as deleteIssueInDB,
 } from "@/lib/dal";
+import { getSession } from "@/lib/auth";
 
 export const createIssue = async (data: IssueData): Promise<ActionResponse> => {
     try {
-        const user = await requireAuthenticatedUser()
+        const user = await getSession()
         if (!user) {
             return {
                 success: false,
@@ -52,7 +52,7 @@ export const createIssue = async (data: IssueData): Promise<ActionResponse> => {
 
 export const updateIssue = async (id: number, data: UpdateIssueData): Promise<ActionResponse> => {
     try {
-        const user = await requireAuthenticatedUser()
+        const user = await getSession()
         if (!user) {
             return {
                 success: false,
