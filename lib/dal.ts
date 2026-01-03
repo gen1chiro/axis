@@ -30,18 +30,13 @@ export const requireAuthenticatedUser = async (): Promise<Partial<User>> => {
 
     if (!session) redirect('/signin');
 
-    try {
-        const result = await db.query.users.findFirst({
-            where: eq(users.id, session.userId),
-        })
+    const result = await db.query.users.findFirst({
+        where: eq(users.id, session.userId),
+    })
 
-        if (!result) throw new Error('User not found');
+    if (!result) throw new Error('User not found');
 
-        return { id: result.id, email: result.email };
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
+    return { id: result.id, email: result.email };
 }
 
 export const getUserByEmail = async (email: string): Promise<User | null> => {
