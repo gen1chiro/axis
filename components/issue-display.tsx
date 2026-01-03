@@ -5,12 +5,18 @@ import React from "react";
 
 const IssueDisplay = async () => {
     const user = await requireAuthenticatedUser();
-    const issues = await getUserIssues(user.id!);
+    const issues = await getUserIssues(user.id);
+
+    console.log(issues);
 
     return issues.length > 0
         ? (
             <div className='w-full'>
-
+                {
+                    issues.map(issue => (
+                        <h1 key={issue.id}>{issue.title}</h1>
+                    ))
+                }
             </div>
         ) : (
             <div className='w-full flex justify-center items-center bg-stone-200 rounded-md py-20'>

@@ -14,7 +14,7 @@ import {
 } from "@/lib/dal";
 import { getSession } from "@/lib/auth";
 
-export const createIssue = async (data: IssueData): Promise<ActionResponse> => {
+export const createIssue = async (formData: FormData): Promise<ActionResponse> => {
     try {
         const user = await getSession()
         if (!user) {
@@ -23,6 +23,14 @@ export const createIssue = async (data: IssueData): Promise<ActionResponse> => {
                 message: 'Authentication required',
                 error: 'Authentication required',
             }
+        }
+
+        const data: IssueData = {
+            title: formData.get('title') as string,
+            description: formData.get('description') as string || undefined,
+            status: formData.get('status') as 'backlog' | 'todo' | 'in_progress' | 'done',
+            priority: formData.get('priority') as 'low' | 'medium' | 'high',
+            userId: user.userId,
         }
 
         const validationResult = IssueSchema.safeParse(data);
@@ -50,7 +58,7 @@ export const createIssue = async (data: IssueData): Promise<ActionResponse> => {
     }
 }
 
-export const updateIssue = async (id: number, data: UpdateIssueData): Promise<ActionResponse> => {
+export const updateIssue = async (id: number, formData: FormData): Promise<ActionResponse> => {
     try {
         const user = await getSession()
         if (!user) {
@@ -59,6 +67,13 @@ export const updateIssue = async (id: number, data: UpdateIssueData): Promise<Ac
                 message: 'Authentication required',
                 error: 'Authentication required',
             }
+        }
+
+        const data: UpdateIssueData = {
+            title: formData.get('title') as string,
+            description: formData.get('description') as string || undefined,
+            status: formData.get('status') as 'backlog' | 'todo' | 'in_progress' | 'done',
+            priority: formData.get('priority') as 'low' | 'medium' | 'high',
         }
 
         const validationResult = UpdateIssueSchema.safeParse(data);

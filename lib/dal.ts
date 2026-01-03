@@ -25,7 +25,7 @@ export const createUser = async (email: string, password: string): Promise<Parti
     }
 }
 
-export const requireAuthenticatedUser = async (): Promise<Partial<User>> => {
+export const requireAuthenticatedUser = async (): Promise<Omit<User, 'password' | 'createdAt'>> => {
     const session = await getSession();
 
     if (!session) redirect('/signin');
@@ -70,15 +70,10 @@ export const createIssue = async (data: IssueData) => {
 
 export const updateIssue = async (id: number, data: UpdateIssueData) => {
     try {
-        const updateData: Record<string, unknown> = {}
-
-        if (data.title !== undefined) updateData.title = data.title;
-        if (data.description !== undefined) updateData.description = data.description;
-        if (data.status !== undefined) updateData.status = data.status;
-        if (data.priority !== undefined) updateData.priority = data.priority;
-        updateData.updatedAt = new Date();
-
-        await db.update(issues).set(updateData).where(eq(issues.id, id));
+        await db.update(issues).set({
+            ...data,
+            updatedAt: new Date(),
+        }).where(eq(issues.id, id));
     } catch (error) {
         console.error('Failed to update issue', error);
         return null;
