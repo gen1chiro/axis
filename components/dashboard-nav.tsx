@@ -3,10 +3,10 @@ import axisLogo from "@/public/images/axis-logo.png";
 import Link from "next/link";
 import { MdAdd } from "react-icons/md";
 import { GoHome } from "react-icons/go";
-import { RiLogoutBoxLine } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
 import React, { Suspense } from "react";
 import UserEmail from "@/components/user-email";
+import LogoutButton from "../components/logout-button";
 
 const DashboardNav = () => {
     return (
@@ -51,11 +51,7 @@ const DashboardNav = () => {
                         <UserEmail />
                     </Suspense>
                 </div>
-
-                <button className='flex items-center gap-1 justify-center bg-zinc-900 text-heading text-white text-sm rounded-sm hover:bg-zinc-800 transition-colors lg:px-4 py-1'>
-                    <RiLogoutBoxLine className="w-4 h-4" />
-                    <span className="hidden lg:block">Sign Out</span>
-                </button>
+                <LogoutButton />
             </div>
         </aside>
     )

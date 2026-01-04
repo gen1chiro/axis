@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { hashPassword} from "@/lib/utils";
 import { User, Issue, users, issues } from "@/db/schema";
 import { db } from "@/db";
-import { eq, desc } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { IssueData, UpdateIssueData } from "@/lib/schemas/issues";
@@ -93,7 +93,7 @@ export const getUserIssues = async (userId: string): Promise<Issue[]> => {
     try {
         const userIssues = await db.query.issues.findMany({
             where: eq(issues.userId, userId),
-            orderBy: desc(issues.createdAt),
+            orderBy: asc(issues.createdAt),
         })
 
         return userIssues ?? [];
