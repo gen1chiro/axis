@@ -1,10 +1,9 @@
 import TaskForm from "@/components/task-form";
-import React from "react";
 
 const NewIssuePage = () => {
     return (
         <div className="min-h-dvh bg-background flex items-center justify-center p-4 relative">
-            <TaskForm />
+            <TaskForm isEditing={ false }/>
             <div
                 className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none"
                 style={{

@@ -13,8 +13,8 @@ import { useActionState } from "react";
 
 type TaskFormProps =
     |{
-        issue: Issue
         isEditing: true;
+        issue: Issue
     }
     |{
         isEditing: false;
@@ -94,6 +94,7 @@ const TaskForm = (props: TaskFormProps) => {
                         type="text"
                         id="title"
                         name="title"
+                        defaultValue={ isEditing ? props.issue.title : '' }
                         className={`block w-full text-heading text-sm px-3 py-3 bg-stone-100 border rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent ${state.errors?.title ? 'border-red-200' : 'border-stone-300'}`}
                         placeholder="Enter task title"
                     />
@@ -114,6 +115,7 @@ const TaskForm = (props: TaskFormProps) => {
                         id="description"
                         name="description"
                         rows={6}
+                        defaultValue={ isEditing ? (props.issue.description ?? '') : '' }
                         className="block w-full text-heading text-sm px-3 py-3 bg-stone-100 border border-stone-300 rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                         placeholder="Describe the task in detail..."
                     />
@@ -127,7 +129,7 @@ const TaskForm = (props: TaskFormProps) => {
                         <select
                             id="status"
                             name="status"
-                            defaultValue='backlog'
+                            defaultValue={ isEditing ? props.issue.status : 'backlog' }
                             className={`block w-full text-heading text-sm px-3 py-3 bg-stone-100 border rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none cursor-pointer ${state.errors?.status ? 'border-red-200' : 'border-stone-300'}`}
                         >
                             {
@@ -152,7 +154,7 @@ const TaskForm = (props: TaskFormProps) => {
                         <select
                             id="priority"
                             name="priority"
-                            defaultValue='low'
+                            defaultValue={ isEditing ? props.issue.priority : 'low' }
                             className={`block w-full text-heading text-sm px-3 py-3 bg-stone-100 border rounded-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none cursor-pointer ${state.errors?.priority ? 'border-red-200' : 'border-stone-300'}`}
                         >
                             {
@@ -183,7 +185,7 @@ const TaskForm = (props: TaskFormProps) => {
                         disabled={ isPending }
                         className="px-6 py-2 bg-zinc-900 text-white text-sm rounded-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 justify-center"
                     >
-                        Create
+                        { isEditing ? 'Update' : 'Create' }
                     </button>
                 </div>
             </form>

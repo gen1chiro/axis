@@ -21,7 +21,7 @@ const IssueTile = ({ issue }: IssueTileProps) => {
     return (
         <Link
             href={`/issues/${id}`}
-            className='w-full p-2 text-sm border-b border-stone-300 hover:bg-stone-300 transition-colors ease-in-out grid grid-cols-6 lg:grid-cols-12 gap-4 justify-items-center items-center'>
+            className='w-full p-2 text-sm border-b border-dotted border-stone-300 hover:bg-stone-300 transition-colors ease-in-out grid grid-cols-6 lg:grid-cols-12 gap-4 justify-items-center items-center'>
             <h1 className='text-heading font-semibold capitalize col-span-4 lg:col-span-6 w-full text-left'>{title}</h1>
             <div className='hidden lg:block col-span-2'>
                 <StatusPill status={status} />
@@ -29,7 +29,7 @@ const IssueTile = ({ issue }: IssueTileProps) => {
             <div className='hidden lg:block col-span-2'>
                 <PriorityPill priority={priority} />
             </div>
-            <p className='text-body text-xs col-span-2 w-full text-right'>{relativeDate}</p>
+            <p className='text-heading text-xs col-span-2 w-full text-right'>{relativeDate}</p>
         </Link>
     )
 }

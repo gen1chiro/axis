@@ -11,7 +11,13 @@ const IssueDisplay = async () => {
 
     return issues.length > 0
         ? (
-            <div className='w-full bg-stone-200 border border-stone-300 rounded-sm flex flex-col'>
+            <div className='w-full bg-stone-200 border border-stone-300 rounded-sm flex flex-col px-2 pt-1 pb-4'>
+                <div className='grid grid-cols-6 lg:grid-cols-12 gap-4 text-body p-2 text-xs text-stone-500 justify-items-center items-center'>
+                    <h1 className='col-span-4 lg:col-span-6 w-full text-left'>Title</h1>
+                    <h1 className='hidden lg:block col-span-2'>Status</h1>
+                    <h1 className='hidden lg:block col-span-2'>Priority</h1>
+                    <h1 className='col-span-2 w-full text-right'>Created</h1>
+                </div>
                 {
                     issues.map(issue => (
                         <IssueTile key={issue.id} issue={issue} />

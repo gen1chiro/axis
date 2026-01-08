@@ -5,7 +5,7 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 
 const LogoutButton = () => {
 
-    const handleSignOut =async () => {
+    const handleSignOut = async () => {
         await signOut();
     }
 

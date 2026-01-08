@@ -48,7 +48,7 @@ const DashboardNav = () => {
                 <div className="hidden lg:flex justify-center items-center gap-3 px-3 py-2 text-body bg-stone-100 rounded-sm shadow-sm">
                     <FiUser className="w-4 h-4" />
                     <Suspense fallback={<div className='text-stone-500 text-xs'>...loading</div>}>
-                        <UserEmail />
+                        <UserEmail className='text-xs'/>
                     </Suspense>
                 </div>
                 <LogoutButton />

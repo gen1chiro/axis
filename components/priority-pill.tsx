@@ -19,7 +19,7 @@ const PriorityPill = ({ priority }: PriorityPillProps) => {
     });
 
     return (
-        <span className={`py-1 px-2 rounded-full text-body text-xs text-white capitalize ${pillColor()}`}>
+        <span className={`py-1 px-2 rounded-full text-heading text-xs text-white capitalize ${pillColor()}`}>
             {priority}
         </span>
     )

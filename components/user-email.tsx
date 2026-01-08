@@ -1,10 +1,14 @@
 import { requireAuthenticatedUser } from "@/lib/dal";
 
-const UserEmail = async () => {
+type UserEmailProps = {
+    className?: string;
+}
+
+const UserEmail = async ({ className }: UserEmailProps) => {
     const user = await requireAuthenticatedUser()
 
     return (
-        <span className='truncate text-xs'>{user?.email}</span>
+        <span className={`truncate ${className}`}>{user?.email}</span>
     )
 }
 

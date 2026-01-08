@@ -102,3 +102,18 @@ export const getUserIssues = async (userId: string): Promise<Issue[]> => {
         throw new Error('Failed to fetch user issues');
     }
 }
+
+export const getIssueById = async (issueId: string): Promise<Issue> => {
+    try {
+        const issue = await db.query.issues.findFirst({
+            where: eq(issues.id, Number(issueId)),
+        })
+
+        if (!issue) throw new Error('Issue not found');
+
+        return issue;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch issue');
+    }
+}
