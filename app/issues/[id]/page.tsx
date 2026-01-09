@@ -8,13 +8,14 @@ import { formatRelativeTime } from "@/lib/utils";
 import UserEmail from "@/components/user-email";
 import { Suspense } from "react";
 import DeleteButton from "@/components/delete-button";
+import DotsLoader from "@/components/dots-loader";
+import IssuePageSkeleton from "@/components/issue-page-skeleton";
 
 type IssuePageProps = {
     params: Promise<{ id: string }>;
 }
 
-const IssuePage = async ({ params }: IssuePageProps) => {
-    const { id } = await params;
+const IssueContent = async ({ id }: { id: string }) => {
     const issue = await getIssueById(id);
     const {
         id: issueId,
@@ -62,7 +63,7 @@ const IssuePage = async ({ params }: IssuePageProps) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <p className="text-xs text-body text-stone-500 mb-2">Assigned to</p>
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<DotsLoader />}>
                             <UserEmail className='text-heading text-sm' />
                         </Suspense>
                     </div>
@@ -90,6 +91,18 @@ const IssuePage = async ({ params }: IssuePageProps) => {
                     WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 100%)'
                 }}
             />
+        </div>
+    );
+}
+
+const IssuePage = async ({ params }: IssuePageProps) => {
+    const { id } = await params;
+
+    return (
+        <div className="w-full min-h-dvh bg-background flex items-start justify-center">
+            <Suspense fallback={<IssuePageSkeleton />}>
+                <IssueContent id={id} />
+            </Suspense>
         </div>
     );
 }

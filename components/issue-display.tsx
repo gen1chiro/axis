@@ -7,8 +7,6 @@ const IssueDisplay = async () => {
     const user = await requireAuthenticatedUser();
     const issues = await getUserIssues(user.id);
 
-    console.log(issues);
-
     return issues.length > 0
         ? (
             <div className='w-full bg-stone-200 border border-stone-300 rounded-sm flex flex-col px-2 pt-1 pb-4'>

@@ -2,6 +2,7 @@ import { MdAdd } from "react-icons/md";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import IssueDisplay from "@/components/issue-display";
+import IssueDisplaySkeleton from "@/components/issue-display-skeleton";
 
 const DashboardPage =  () => {
     return (
@@ -16,7 +17,7 @@ const DashboardPage =  () => {
                     <span className='hidden lg:block'>New Issue</span>
                 </Link>
             </div>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<IssueDisplaySkeleton />}>
                 <IssueDisplay/>
             </Suspense>
         </div>

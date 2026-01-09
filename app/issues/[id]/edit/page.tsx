@@ -10,7 +10,7 @@ const EditIssuePage = async ({ params }: EditIssuePageProps) => {
     const issue = await getIssueById(id);
 
     return (
-        <div className="w-full min-h-dvh bg-background flex items-center justify-center p-4 relative">
+        <>
             <TaskForm isEditing={ true } issue={ issue }/>
             <div
                 className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none"
@@ -21,8 +21,8 @@ const EditIssuePage = async ({ params }: EditIssuePageProps) => {
                     WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 100%)'
                 }}
             />
-        </div>
-    )
+        </>
+    );
 }
 
 export default EditIssuePage;

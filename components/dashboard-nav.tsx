@@ -7,10 +7,11 @@ import { FiUser } from "react-icons/fi";
 import React, { Suspense } from "react";
 import UserEmail from "@/components/user-email";
 import LogoutButton from "../components/logout-button";
+import DotsLoader from "@/components/dots-loader";
 
 const DashboardNav = () => {
     return (
-        <aside className="fixed top-0 left-0 inset-y-0 bg-stone-200 shadow-md w-14 lg:w-64 flex flex-col justify-between items-start py-4 px-3">
+        <aside className="fixed top-0 left-0 inset-y-0 bg-stone-200 border-r border-stone-300 w-14 lg:w-64 flex flex-col justify-between items-start py-4 px-3">
             <div className='w-full flex flex-col items-center lg:items-start gap-8'>
                 <Link
                     href={'/'}
@@ -47,7 +48,7 @@ const DashboardNav = () => {
                 <div className="w-full border-t border-dotted border-stone-400" />
                 <div className="hidden lg:flex justify-center items-center gap-3 px-3 py-2 text-body bg-stone-100 rounded-sm shadow-sm">
                     <FiUser className="w-4 h-4" />
-                    <Suspense fallback={<div className='text-stone-500 text-xs'>...loading</div>}>
+                    <Suspense fallback={<DotsLoader />}>
                         <UserEmail className='text-xs'/>
                     </Suspense>
                 </div>
