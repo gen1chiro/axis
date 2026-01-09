@@ -13,6 +13,7 @@ import {
     deleteIssue as deleteIssueInDB,
 } from "@/lib/dal";
 import { getSession } from "@/lib/auth";
+import { revalidateTag } from "next/cache";
 
 export const createIssue = async (formData: FormData): Promise<ActionResponse> => {
     try {
@@ -43,6 +44,8 @@ export const createIssue = async (formData: FormData): Promise<ActionResponse> =
         }
 
         await saveIssueToDB(validationResult.data)
+
+        revalidateTag(`user-issues-${user.userId}`, 'max');
 
         return {
             success: true,
@@ -87,6 +90,9 @@ export const updateIssue = async (id: number, formData: FormData): Promise<Actio
 
         await updateIssueInDB(id, validationResult.data)
 
+        revalidateTag(`issue-${id}`, 'max');
+        revalidateTag(`user-issues-${user.userId}`, 'max');
+
         return {
             success: true,
             message: 'Issue updated successfully',
@@ -103,7 +109,20 @@ export const updateIssue = async (id: number, formData: FormData): Promise<Actio
 
 export const deleteIssue = async (id: number): Promise<ActionResponse> => {
     try {
+        const user = await getSession()
+        if (!user) {
+            return {
+                success: false,
+                message: 'Authentication required',
+                error: 'Authentication required',
+            }
+        }
+
         await deleteIssueInDB(id)
+
+        revalidateTag(`issue-${id}`, 'max');
+        revalidateTag(`user-issues-${user.userId}`, 'max');
+
         return {
             success: true,
             message: 'Issue deleted successfully',

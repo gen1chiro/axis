@@ -6,6 +6,8 @@ import { eq, asc } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { IssueData, UpdateIssueData } from "@/lib/schemas/issues";
+import { cache } from "react";
+import { cacheTag } from "next/cache";
 
 // user operations
 export const createUser = async (email: string, password: string): Promise<Partial<User> | null> => {
@@ -25,7 +27,7 @@ export const createUser = async (email: string, password: string): Promise<Parti
     }
 }
 
-export const requireAuthenticatedUser = async (): Promise<Omit<User, 'password' | 'createdAt'>> => {
+export const requireAuthenticatedUser = cache(async (): Promise<Omit<User, 'password' | 'createdAt'>> => {
     const session = await getSession();
 
     if (!session) redirect('/signin');
@@ -37,9 +39,9 @@ export const requireAuthenticatedUser = async (): Promise<Omit<User, 'password' 
     if (!result) throw new Error('User not found');
 
     return { id: result.id, email: result.email };
-}
+});
 
-export const getUserByEmail = async (email: string): Promise<User | null> => {
+export const getUserByEmail = cache(async (email: string): Promise<User | null> => {
     try {
         const user = await db.query.users.findFirst({
             where: eq(users.email, email),
@@ -50,7 +52,7 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
         console.error(error);
         return null;
     }
-}
+})
 
 // issue operations
 export const createIssue = async (data: IssueData) => {
@@ -90,6 +92,9 @@ export const deleteIssue = async (id: number) => {
 }
 
 export const getUserIssues = async (userId: string): Promise<Issue[]> => {
+    'use cache';
+    cacheTag(`user-issues-${userId}`);
+
     try {
         const userIssues = await db.query.issues.findMany({
             where: eq(issues.userId, userId),
@@ -101,9 +106,12 @@ export const getUserIssues = async (userId: string): Promise<Issue[]> => {
         console.error(error);
         throw new Error('Failed to fetch user issues');
     }
-}
+};
 
 export const getIssueById = async (issueId: string): Promise<Issue> => {
+    'use cache';
+    cacheTag(`issue-${issueId}`);
+
     try {
         const issue = await db.query.issues.findFirst({
             where: eq(issues.id, Number(issueId)),
@@ -116,4 +124,4 @@ export const getIssueById = async (issueId: string): Promise<Issue> => {
         console.error(error);
         throw new Error('Failed to fetch issue');
     }
-}
+};

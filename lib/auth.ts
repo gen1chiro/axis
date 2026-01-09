@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import * as jose from 'jose';
+import { cache } from 'react';
 
 interface JWTPayload {
     userId: string;
@@ -67,7 +68,7 @@ export const createSession = async (userId: string) => {
     }
 }
 
-export const getSession = async () => {
+export const getSession = cache(async () => {
     try {
         const cookieStore = await cookies();
         const token = cookieStore.get('auth_token')?.value;
@@ -116,7 +117,7 @@ export const getSession = async () => {
         console.error('Error getting session:', error);
         return null;
     }
-}
+})
 
 export const destroySession = async () => {
     try {
