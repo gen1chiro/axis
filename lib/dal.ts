@@ -4,7 +4,6 @@ import { User, Issue, users, issues } from "@/db/schema";
 import { db } from "@/db";
 import { eq, asc } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { IssueData, UpdateIssueData } from "@/lib/schemas/issues";
 import { cache } from "react";
 import { cacheTag } from "next/cache";
@@ -30,7 +29,7 @@ export const createUser = async (email: string, password: string): Promise<Parti
 export const requireAuthenticatedUser = cache(async (): Promise<Omit<User, 'password' | 'createdAt'>> => {
     const session = await getSession();
 
-    if (!session) redirect('/signin');
+    if (!session) throw new Error('No session found');
 
     const result = await db.query.users.findFirst({
         where: eq(users.id, session.userId),
