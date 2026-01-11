@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import { GoArrowUpRight } from "react-icons/go";
+import heroImage from '@/public/images/hero-image.png';
 
 const HomePage = () => {
     return (
-        <div className='w-responsive flex flex-col items-start justify-center'>
+        <div className='w-responsive flex flex-col items-start justify-center py-20 gap-10'>
             <div className='w-3/4 md:w-1/2 flex flex-col items-start gap-4'>
                 <div className='text-heading text-4xl sm:text-5xl'>
                     <h1>Pinpoint problems.</h1>
@@ -20,6 +22,7 @@ const HomePage = () => {
                     <GoArrowUpRight />
                 </Link>
             </div>
+            <Image src={heroImage} alt={'axis hero image'} loading={'eager'} className='w-full rounded-lg border-10 md:border-20 border-stone-900/10' />
         </div>
     );
 }
