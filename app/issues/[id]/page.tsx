@@ -15,7 +15,8 @@ type IssuePageProps = {
     params: Promise<{ id: string }>;
 }
 
-const IssueContent = async ({ id }: { id: string }) => {
+const IssueContent = async ({ params }: IssuePageProps) => {
+    const { id } = await params;
     const issue = await getIssueById(id);
     const {
         id: issueId,
@@ -28,7 +29,7 @@ const IssueContent = async ({ id }: { id: string }) => {
     } = issue;
 
     return (
-        <div className="w-full max-w-4xl p-4 flex flex-col justify-center items-start gap-5 mt-6">
+        <div className="w-full max-w-4xl flex flex-col justify-center items-start gap-5 mt-6">
             <Link href='/dashboard'
                   className="flex items-center justify-center gap-1 decoration-dotted hover:underline">
                 <IoIosArrowBack className="text-lg text-purple-400"/>
@@ -49,11 +50,15 @@ const IssueContent = async ({ id }: { id: string }) => {
             </div>
 
             <div className="w-full bg-stone-200 border border-stone-300 rounded-md p-4 text-heading text-sm">
-                <div className="w-full flex items-center gap-3 text-xs text-stone-500 text-body mb-4">
-                    <StatusPill status={status} />
-                    <PriorityPill priority={priority} />
-                    <span>Created {formatRelativeTime(createdAt)}</span>
-                    <span>Updated {formatRelativeTime(updatedAt)}</span>
+                <div className="w-full flex flex-col md:flex-row items-start md:items-center gap-2 text-xs text-stone-500 text-body mb-4">
+                    <div className="flex items-center gap-2">
+                        <StatusPill status={status} />
+                        <PriorityPill priority={priority} />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>Created {formatRelativeTime(createdAt)}</span>
+                        <span>Updated {formatRelativeTime(updatedAt)}</span>
+                    </div>
                 </div>
                 <p className={description ?? 'text-stone-400'}>{description ?? 'No description provided'}</p>
             </div>
@@ -96,12 +101,10 @@ const IssueContent = async ({ id }: { id: string }) => {
 }
 
 const IssuePage = async ({ params }: IssuePageProps) => {
-    const { id } = await params;
-
     return (
-        <div className="w-full min-h-dvh bg-background flex items-start justify-center">
+        <div className="w-full min-h-dvh bg-background flex items-start justify-center p-4">
             <Suspense fallback={<IssuePageSkeleton />}>
-                <IssueContent id={id} />
+                <IssueContent params={params} />
             </Suspense>
         </div>
     );

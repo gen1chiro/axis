@@ -1,6 +1,6 @@
 const IssuePageSkeleton = () => {
     return (
-        <div className="w-full max-w-4xl p-4 flex flex-col gap-5 mt-6 animate-pulse">
+        <div className="w-full max-w-4xl flex flex-col gap-5 mt-6 animate-pulse">
             <div className="h-4 w-32 bg-stone-300 rounded-sm" />
 
             <div className="w-full flex items-start justify-between">
