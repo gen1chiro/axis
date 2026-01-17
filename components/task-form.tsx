@@ -10,6 +10,7 @@ import { Issue, ISSUE_PRIORITY, ISSUE_STATUS } from "@/db/schema";
 import { ActionResponse } from "@/app/actions/auth";
 import { createIssue, updateIssue } from "@/app/actions/issues";
 import { useActionState } from "react";
+import Spinner from "@/components/spinner"
 
 type TaskFormProps =
     |{
@@ -183,9 +184,13 @@ const TaskForm = (props: TaskFormProps) => {
                     <button
                         type="submit"
                         disabled={ isPending }
-                        className="px-6 py-2 bg-zinc-900 text-white text-sm rounded-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 justify-center"
+                        className={`px-6 py-2 text-white text-sm rounded-sm transition-colors flex items-center gap-2 justify-center ${isPending ? 'bg-zinc-600 cursor-not-allowed' : 'bg-zinc-900 hover:bg-zinc-800'}`}
                     >
-                        { isEditing ? 'Update' : 'Create' }
+                        {isPending && <Spinner />}
+                        {isEditing
+                            ? isPending ? 'Updating' : 'Update'
+                            : isPending ? 'Creating' : 'Create'
+                        }
                     </button>
                 </div>
             </form>

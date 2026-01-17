@@ -7,6 +7,7 @@ import axisLogo from '@/public/images/axis-logo.png';
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { ActionResponse, signUp } from '@/app/actions/auth';
+import Spinner from "@/components/spinner";
 
 const initialState: ActionResponse = {
     success: false,
@@ -171,10 +172,11 @@ const SignUpPage = () => {
 
                         <button
                             type='submit'
-                            disabled={isPending}
-                            className="w-full bg-zinc-900 text-heading text-white py-2 text-sm rounded-sm hover:bg-zinc-800 transition-colors"
+                            disabled={ isPending }
+                            className={`w-full text-heading text-white py-2 text-sm rounded-sm transition-colors flex items-center gap-2 justify-center ${isPending ? 'bg-zinc-600 cursor-not-allowed' : 'bg-zinc-900 hover:bg-zinc-800'}`}
                         >
-                            Create Account
+                            { isPending && <Spinner /> }
+                            { isPending ? 'Creating Account' : 'Create Account' }
                         </button>
                     </form>
 
