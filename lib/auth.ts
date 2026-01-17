@@ -14,7 +14,7 @@ const JWT_SECRET = new TextEncoder().encode(
     process.env.JWT_SECRET
 );
 
-const generateJWT = async (payload: JWTPayload): Promise<string> => {
+export const generateJWT = async (payload: JWTPayload): Promise<string> => {
     return await new jose.SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
@@ -22,7 +22,7 @@ const generateJWT = async (payload: JWTPayload): Promise<string> => {
         .sign(JWT_SECRET)
 }
 
-const verifyJWT = async (token: string): Promise<JWTPayload | null> => {
+export const verifyJWT = async (token: string): Promise<JWTPayload | null> => {
     try {
         const { payload } = await jose.jwtVerify(token, JWT_SECRET);
         return payload as JWTPayload;
@@ -32,7 +32,7 @@ const verifyJWT = async (token: string): Promise<JWTPayload | null> => {
     }
 }
 
-const shouldRefreshToken = async (token: string) => {
+export const shouldRefreshToken = async (token: string): Promise<boolean> => {
     try {
         const { payload } = await jose.jwtVerify(token, JWT_SECRET);
         const exp = payload.exp;
@@ -40,8 +40,7 @@ const shouldRefreshToken = async (token: string) => {
         const now = Math.floor(Date.now() / 1000);
 
         return exp - now < REFRESH_THRESHOLD;
-    } catch (error) {
-        console.error(error);
+    } catch {
         return false;
     }
 }
@@ -75,33 +74,9 @@ export const getSession = cache(async () => {
 
         if (!token) return null;
 
-        const needsRefresh = await shouldRefreshToken(token);
-        if (needsRefresh) {
-            try {
-                const payload = await verifyJWT(token);
-                if(!payload) return null;
-
-                const newToken = await generateJWT({ userId: payload.userId });
-
-                cookieStore.set({
-                    name: 'auth_token',
-                    value: newToken,
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
-                    maxAge: 60 * 60 * 24 * 7,
-                    path: '/',
-                    sameSite: 'lax'
-                });
-
-                return { userId: payload.userId };
-            } catch (error) {
-                console.error('Error refreshing token:', error);
-                return null;
-            }
-        }
-
         const payload = await verifyJWT(token);
         if (!payload) return null;
+
         return { userId: payload.userId };
     } catch (error) {
         if (
