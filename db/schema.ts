@@ -27,6 +27,14 @@ export const users = pgTable('users', {
     createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
+export const issueGroups = pgTable('issue_groups', {
+    id: integer('id').primaryKey().generatedByDefaultAsIdentity(),
+    userId: text('user_id').notNull(),
+    name: text('name').notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
 export const issues = pgTable('issues', {
     id: integer('id').primaryKey().generatedByDefaultAsIdentity(),
     title: text('title').notNull(),
@@ -35,17 +43,25 @@ export const issues = pgTable('issues', {
     priority: priorityEnum('priority').notNull().default('low'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
-    userId: text('user_id').notNull(),
+    groupId: integer('group_id'),
 })
 
 export const userRelations = relations(users, ({ many }) => ({
+    issueGroups: many(issueGroups),
+}))
+
+export const issueGroupRelations = relations(issueGroups, ({ one, many }) => ({
+    users: one(users, {
+        fields: [issueGroups.userId],
+        references: [users.id],
+    }),
     issues: many(issues),
 }))
 
 export const issueRelations = relations(issues, ({ one }) => ({
-    user: one(users, {
-        fields: [issues.userId],
-        references: [users.id],
+    issueGroups: one(issueGroups, {
+        fields: [issues.groupId],
+        references: [issueGroups.id],
     }),
 }))
 

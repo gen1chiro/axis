@@ -8,6 +8,13 @@
       "when": 1766825950108,
       "tag": "0000_good_whirlwind",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1769836907957,
+      "tag": "0001_add-issue-groups-table",
+      "breakpoints": true
     }
   ]
 }
