@@ -10,6 +10,7 @@ import LogoutButton from "../components/logout-button";
 import DotsLoader from "@/components/dots-loader";
 import NavGroups from "@/components/nav-groups";
 import NavGroupsSkeleton from "@/components/nav-groups-skeleton";
+import NavButton from "@/components/nav-button";
 
 const DashboardNav = () => {
     return (
@@ -30,19 +31,13 @@ const DashboardNav = () => {
                 <nav className="w-full flex flex-col gap-1 text-heading text-sm mt-4">
                     <Link
                         href="/dashboard"
-                        className="flex items-center justify-center lg:justify-start gap-3 lg:px-3 py-2 rounded-sm hover:bg-stone-300 transition-colors"
+                        className="flex items-center justify-center lg:justify-start gap-3 lg:px-3 py-2 text-sm rounded-sm hover:bg-stone-300 transition-colors"
                     >
                         <GoHome className="w-5 h-5" />
                         <span className="hidden lg:block">Dashboard</span>
                     </Link>
 
-                    <Link
-                        href="/issues/new"
-                        className="hidden lg:flex items-center justify-center lg:justify-start gap-3 lg:px-3 py-2 rounded-sm hover:bg-stone-300 transition-colors"
-                    >
-                        <MdAdd className="w-5 h-5" />
-                        <span>New Group</span>
-                    </Link>
+                    <NavButton />
                 </nav>
 
                 <div className='w-full hidden lg:block px-3'>
