@@ -8,11 +8,13 @@ import React, { Suspense } from "react";
 import UserEmail from "@/components/user-email";
 import LogoutButton from "../components/logout-button";
 import DotsLoader from "@/components/dots-loader";
+import NavGroups from "@/components/nav-groups";
+import NavGroupsSkeleton from "@/components/nav-groups-skeleton";
 
 const DashboardNav = () => {
     return (
         <aside className="fixed top-0 left-0 inset-y-0 bg-stone-200 border-r border-stone-300 w-14 lg:w-64 flex flex-col justify-between items-start py-4 px-3">
-            <div className='w-full flex flex-col items-center lg:items-start gap-8'>
+            <div className='w-full flex flex-col items-center lg:items-start gap-4'>
                 <Link
                     href={'/'}
                     className='flex items-center justify-center text-body text-base lg:px-3'
@@ -25,7 +27,7 @@ const DashboardNav = () => {
                     <p className='hidden lg:block'>Axis</p>
                 </Link>
 
-                <nav className="w-full flex flex-col gap-1 text-heading text-sm">
+                <nav className="w-full flex flex-col gap-1 text-heading text-sm mt-4">
                     <Link
                         href="/dashboard"
                         className="flex items-center justify-center lg:justify-start gap-3 lg:px-3 py-2 rounded-sm hover:bg-stone-300 transition-colors"
@@ -36,12 +38,20 @@ const DashboardNav = () => {
 
                     <Link
                         href="/issues/new"
-                        className="flex items-center justify-center lg:justify-start gap-3 lg:px-3 py-2 rounded-sm hover:bg-stone-300 transition-colors"
+                        className="hidden lg:flex items-center justify-center lg:justify-start gap-3 lg:px-3 py-2 rounded-sm hover:bg-stone-300 transition-colors"
                     >
                         <MdAdd className="w-5 h-5" />
-                        <span className="hidden lg:block">New Issue</span>
+                        <span>New Group</span>
                     </Link>
                 </nav>
+
+                <div className='w-full hidden lg:block px-3'>
+                    <h1 className='text-body text-xs'>Groups</h1>
+                    <Suspense fallback={<NavGroupsSkeleton />}>
+                        <NavGroups />
+                    </Suspense>
+                </div>
+
             </div>
 
             <div className="w-full flex flex-col gap-4">
