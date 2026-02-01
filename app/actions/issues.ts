@@ -45,7 +45,7 @@ export const createIssue = async (formData: FormData, groupId: number): Promise<
 
         await saveIssueToDB(validationResult.data)
 
-        updateTag(`user-issues-${user.userId}`)
+        updateTag(`issue-group-${groupId}`)
 
         return {
             success: true,
@@ -88,10 +88,10 @@ export const updateIssue = async (id: number, formData: FormData): Promise<Actio
             }
         }
 
-        await updateIssueInDB(id, validationResult.data)
+        const result = await updateIssueInDB(id, validationResult.data)
 
         updateTag(`issue-${id}`);
-        updateTag(`user-issues-${user.userId}`);
+        updateTag(`issue-group-${result?.groupId}`);
 
         return {
             success: true,
@@ -118,9 +118,9 @@ export const deleteIssue = async (id: number): Promise<ActionResponse> => {
             }
         }
 
-        updateTag(`user-issues-${user.userId}`);
+        const result = await deleteIssueInDB(id)
 
-        await deleteIssueInDB(id)
+        updateTag(`issue-group-${result?.groupId}`);
 
         return {
             success: true,

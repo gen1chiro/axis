@@ -71,10 +71,11 @@ export const createIssue = async (data: IssueData) => {
 
 export const updateIssue = async (id: number, data: UpdateIssueData) => {
     try {
-        await db.update(issues).set({
+        const [{ groupId }] = await db.update(issues).set({
             ...data,
             updatedAt: new Date(),
-        }).where(eq(issues.id, id));
+        }).where(eq(issues.id, id)).returning({ groupId: issues.groupId })
+        return { groupId }
     } catch (error) {
         console.error('Failed to update issue', error);
         return null;
@@ -83,7 +84,10 @@ export const updateIssue = async (id: number, data: UpdateIssueData) => {
 
 export const deleteIssue = async (id: number) => {
     try {
-        await db.delete(issues).where(eq(issues.id, id));
+        const [{ groupId }] = await db.delete(issues)
+            .where(eq(issues.id, id))
+            .returning({ groupId: issues.groupId })
+        return { groupId }
     } catch (error) {
         console.error('Failed to delete issue', error);
         return null;
@@ -146,7 +150,7 @@ export const updateIssueGroup = async (id: number, name: string) => {
 
 export const getUserIssueGroups = async (userId: string): Promise<IssueGroup[]> => {
     'use cache';
-    cacheTag(`user-issues-${userId}`);
+    cacheTag(`user-issue-groups-${userId}`);
 
     try {
         const userIssueGroups = await db.query.issueGroups.findMany({
@@ -177,6 +181,9 @@ export const getIssueGroupById = async (groupId: number): Promise<IssueGroup> =>
 }
 
 export const getIssuesByGroupId = async (groupId: number): Promise<Issue[]> => {
+    'use cache';
+    cacheTag(`issue-group-${groupId}`);
+
     try {
         const issuesInGroup = await db.query.issues.findMany({
             where: eq(issues.groupId, groupId),

@@ -27,7 +27,7 @@ const initialState: ActionResponse = {
     errors: undefined,
 }
 
-const TaskForm = (props: TaskFormProps) => {
+const IssueForm = (props: TaskFormProps) => {
     const router = useRouter()
     const { groupId } = useParams()
     const { isEditing } = props
@@ -198,4 +198,4 @@ const TaskForm = (props: TaskFormProps) => {
     );
 }
 
-export default TaskForm;
+export default IssueForm;

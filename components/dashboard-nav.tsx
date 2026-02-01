@@ -1,7 +1,6 @@
 import Image from "next/image";
 import axisLogo from "@/public/images/axis-logo.png";
 import Link from "next/link";
-import { MdAdd } from "react-icons/md";
 import { GoHome } from "react-icons/go";
 import { FiUser } from "react-icons/fi";
 import React, { Suspense } from "react";

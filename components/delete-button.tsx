@@ -2,7 +2,7 @@
 
 import { FiTrash2 } from "react-icons/fi";
 import { deleteIssue } from "@/app/actions/issues";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useTransition } from "react";
 import Spinner from "@/components/spinner";
 
@@ -13,11 +13,12 @@ type DeleteButtonProps = {
 const DeleteButton = ({ issueID }: DeleteButtonProps) => {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
+    const { groupId } = useParams();
 
     const handleDelete = async () => {
         startTransition( async () => {
             await deleteIssue(issueID);
-            router.push("/dashboard");
+            router.push(`/issues/${groupId}`);
         });
     }
 

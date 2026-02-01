@@ -7,6 +7,7 @@ import {
     deleteIssueGroup as deleteIssueGroupFromDB,
 } from "@/lib/dal";
 import { getSession } from "@/lib/auth";
+import { updateTag } from "next/cache";
 
 export interface GroupActionResponse extends ActionResponse {
     id?: number;
@@ -26,6 +27,8 @@ export const createIssueGroup = async (formData: FormData): Promise<GroupActionR
 
     try {
         const result = await createIssueGroupInDB(user.userId, name)
+        updateTag(`user-issue-groups-${user.userId}`)
+
         if (!result) {
             return {
                 success: false,

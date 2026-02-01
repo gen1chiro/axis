@@ -1,4 +1,4 @@
-import TaskForm from "@/components/task-form";
+import IssueForm from "@/components/issue-form";
 import { getIssueById } from "@/lib/dal";
 
 type EditIssuePageProps = {
@@ -11,7 +11,7 @@ const EditIssuePage = async ({ params }: EditIssuePageProps) => {
 
     return (
         <>
-            <TaskForm isEditing={ true } issue={ issue }/>
+            <IssueForm isEditing={ true } issue={ issue }/>
             <div
                 className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none"
                 style={{
