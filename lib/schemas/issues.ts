@@ -13,8 +13,7 @@ export const IssueSchema = z.object({
     priority: z.enum(['low', 'medium', 'high'], {
         errorMap: () => ({ message: 'Please select a valid priority' }),
     }),
-    userId: z.string()
-        .min(1, 'User ID is required'),
+    groupId: z.number().int(),
 })
 
 export const UpdateIssueSchema = IssueSchema.partial()

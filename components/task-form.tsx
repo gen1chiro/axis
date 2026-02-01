@@ -1,10 +1,9 @@
 'use client';
 
-//import { FiLoader } from 'react-icons/fi';
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import axisLogo from "@/public/images/axis-logo.png";
 import { Issue, ISSUE_PRIORITY, ISSUE_STATUS } from "@/db/schema";
 import { ActionResponse } from "@/app/actions/auth";
@@ -29,8 +28,9 @@ const initialState: ActionResponse = {
 }
 
 const TaskForm = (props: TaskFormProps) => {
-    const router = useRouter();
-    const { isEditing } = props;
+    const router = useRouter()
+    const { groupId } = useParams()
+    const { isEditing } = props
 
     const [state, formAction, isPending] = useActionState<ActionResponse, FormData>
     (
@@ -38,10 +38,10 @@ const TaskForm = (props: TaskFormProps) => {
             try {
                 const result = isEditing
                     ? await updateIssue(props.issue.id, formData)
-                    : await createIssue(formData);
+                    : await createIssue(formData, Number(groupId))
 
                 if (result.success) {
-                    router.push('/dashboard');
+                    router.push(`/issues/${groupId}`);
                 }
 
                 return result;
@@ -67,10 +67,10 @@ const TaskForm = (props: TaskFormProps) => {
     return (
         <main className="w-full max-w-2xl bg-stone-200 rounded-lg p-4 border border-stone-300 z-10">
             <div className="flex flex-col items-start justify-center gap-4 mb-8">
-                <Link href='/dashboard'
+                <Link href={`/issues/${groupId}`}
                       className="flex items-center justify-center gap-1 decoration-dotted hover:underline">
                     <IoIosArrowBack className="text-lg text-purple-400"/>
-                    <span className="text-sm text-body">BACK TO DASHBOARD</span>
+                    <span className="text-sm text-body">BACK TO ISSUES</span>
                 </Link>
                 <div className='flex justify-center items-center gap-2'>
                     <Image src={axisLogo} alt={'axis logo'} className='w-8 aspect-square sm:w-10'/>
@@ -176,7 +176,7 @@ const TaskForm = (props: TaskFormProps) => {
 
                 <div className="flex justify-end gap-3 pt-4 text-heading">
                     <Link
-                        href='/dashboard'
+                        href={`/issues/${groupId}`}
                         className="px-6 py-2 text-sm rounded-sm bg-white hover:bg-stone-100 transition-colors"
                     >
                         Cancel

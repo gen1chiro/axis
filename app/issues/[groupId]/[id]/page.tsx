@@ -12,11 +12,11 @@ import DotsLoader from "@/components/dots-loader";
 import IssuePageSkeleton from "@/components/issue-page-skeleton";
 
 type IssuePageProps = {
-    params: Promise<{ id: string }>;
+    params: Promise<{ groupId: string, id: string }>;
 }
 
 const IssueContent = async ({ params }: IssuePageProps) => {
-    const { id } = await params;
+    const { groupId, id } = await params;
     const issue = await getIssueById(id);
     const {
         id: issueId,
@@ -30,7 +30,7 @@ const IssueContent = async ({ params }: IssuePageProps) => {
 
     return (
         <div className="w-full max-w-4xl flex flex-col justify-center items-start gap-5 mt-6">
-            <Link href='/dashboard'
+            <Link href={`/issues/${groupId}`}
                   className="flex items-center justify-center gap-1 decoration-dotted hover:underline">
                 <IoIosArrowBack className="text-lg text-purple-400"/>
                 <span className="text-sm text-body">BACK TO ISSUES</span>
@@ -40,7 +40,7 @@ const IssueContent = async ({ params }: IssuePageProps) => {
                 <h1 className="text-3xl font-semibold capitalize text-heading">{title}</h1>
                 <div className="flex gap-3">
                     <Link
-                        href={`/issues/${id}/edit`}
+                        href={`/issues/${groupId}/${id}/edit`}
                         className="flex items-center gap-2 p-2 bg-white text-xs text-heading rounded-sm hover:bg-stone-100 transition-colors"
                     >
                         <FiEdit2 className="w-4 h-4" />

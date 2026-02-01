@@ -65,8 +65,9 @@ export const issueRelations = relations(issues, ({ one }) => ({
     }),
 }))
 
-export type User = InferSelectModel<typeof users>;
-export type Issue = InferSelectModel<typeof issues>;
+export type User = InferSelectModel<typeof users>
+export type IssueGroup = InferSelectModel<typeof issueGroups>
+export type Issue = InferSelectModel<typeof issues>
 
 export const ISSUE_STATUS = {
     backlog: { label: 'Backlog', value: 'backlog' },

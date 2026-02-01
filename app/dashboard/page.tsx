@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 import IssueDisplay from "@/components/issue-display";
 import IssueDisplaySkeleton from "@/components/issue-display-skeleton";
+import GroupForm from "@/components/group-form";
 
 const DashboardPage =  () => {
     return (
@@ -14,9 +15,10 @@ const DashboardPage =  () => {
                     className="flex items-center justify-center lg:justify-start gap-3 text-heading px-2 lg:px-3 py-2 rounded-sm text-white text-sm bg-zinc-900 hover:bg-zinc-800 transition-colors"
                 >
                     <MdAdd className="w-4 h-4" />
-                    <span className='hidden lg:block'>New Issue</span>
+                    <span className='hidden lg:block'>New</span>
                 </Link>
             </div>
+            <GroupForm />
             <Suspense fallback={<IssueDisplaySkeleton />}>
                 <IssueDisplay/>
             </Suspense>

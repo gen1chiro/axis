@@ -11,7 +11,7 @@ import { createSession, destroySession } from "@/lib/auth";
 import { createUser, getUserByEmail } from "@/lib/dal";
 import { redirect } from "next/navigation";
 
-export type ActionResponse = {
+export interface ActionResponse {
     success: boolean
     message: string
     errors?: Record<string, string[]>

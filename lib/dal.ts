@@ -61,7 +61,7 @@ export const createIssue = async (data: IssueData) => {
             description: data.description || null,
             status: data.status,
             priority: data.priority,
-            userId: data.userId,
+            groupId: data.groupId,
         })
     } catch (error) {
         console.error('Failed to create issue', error);
@@ -112,11 +112,11 @@ export const getIssueById = async (issueId: string): Promise<Issue> => {
 
 export const createIssueGroup = async (userId: string, name: string): Promise<Partial<IssueGroup> | null> => {
     try {
-        await db.insert(issueGroups).values({
+        const [{ id }] = await db.insert(issueGroups).values({
             userId,
             name,
-        })
-        return { userId, name };
+        }).returning({ id: issueGroups.id })
+        return { id, userId, name };
     } catch (error) {
         console.error('Failed to create issue group', error);
         return null;
@@ -149,14 +149,43 @@ export const getUserIssueGroups = async (userId: string): Promise<IssueGroup[]> 
     cacheTag(`user-issues-${userId}`);
 
     try {
-        const userIssues = await db.query.issueGroups.findMany({
+        const userIssueGroups = await db.query.issueGroups.findMany({
             where: eq(issueGroups.userId, userId),
             orderBy: asc(issueGroups.createdAt),
         })
 
-        return userIssues ?? [];
+        return userIssueGroups ?? [];
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch user issues');
     }
 };
+
+export const getIssueGroupById = async (groupId: number): Promise<IssueGroup> => {
+    try {
+        const issueGroup = await db.query.issueGroups.findFirst({
+            where: eq(issueGroups.id, groupId),
+        })
+
+        if (!issueGroup) throw new Error('Issue group not found')
+
+        return issueGroup
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch issue group');
+    }
+}
+
+export const getIssuesByGroupId = async (groupId: number): Promise<Issue[]> => {
+    try {
+        const issuesInGroup = await db.query.issues.findMany({
+            where: eq(issues.groupId, groupId),
+            orderBy: asc(issues.createdAt),
+        })
+
+        return issuesInGroup ?? [];
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch issues in group');
+    }
+}

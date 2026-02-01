@@ -15,7 +15,7 @@ import {
 import { getSession } from "@/lib/auth";
 import { updateTag } from "next/cache";
 
-export const createIssue = async (formData: FormData): Promise<ActionResponse> => {
+export const createIssue = async (formData: FormData, groupId: number): Promise<ActionResponse> => {
     try {
         const user = await getSession()
         if (!user) {
@@ -31,7 +31,7 @@ export const createIssue = async (formData: FormData): Promise<ActionResponse> =
             description: formData.get('description') as string || undefined,
             status: formData.get('status') as 'backlog' | 'todo' | 'in_progress' | 'done',
             priority: formData.get('priority') as 'low' | 'medium' | 'high',
-            userId: user.userId,
+            groupId: groupId,
         }
 
         const validationResult = IssueSchema.safeParse(data);
@@ -45,7 +45,7 @@ export const createIssue = async (formData: FormData): Promise<ActionResponse> =
 
         await saveIssueToDB(validationResult.data)
 
-        updateTag(`user-issues-${user.userId}`);
+        updateTag(`user-issues-${user.userId}`)
 
         return {
             success: true,

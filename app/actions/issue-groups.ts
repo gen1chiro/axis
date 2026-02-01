@@ -8,7 +8,11 @@ import {
 } from "@/lib/dal";
 import { getSession } from "@/lib/auth";
 
-export const createIssueGroup = async (formData: FormData): Promise<ActionResponse> => {
+export interface GroupActionResponse extends ActionResponse {
+    id?: number;
+}
+
+export const createIssueGroup = async (formData: FormData): Promise<GroupActionResponse> => {
     const user = await getSession()
     if (!user) {
         return {
@@ -33,6 +37,7 @@ export const createIssueGroup = async (formData: FormData): Promise<ActionRespon
         return {
             success: true,
             message: 'Issue group created successfully',
+            id: result.id,
         }
     } catch (error) {
         console.error('Failed to create issue group:')
