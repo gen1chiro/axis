@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { hashPassword} from "@/lib/utils";
-import { User, Issue, users, issues } from "@/db/schema";
+import { User, IssueGroup, Issue, users, issues, issueGroups } from "@/db/schema";
 import { db } from "@/db";
 import { eq, asc } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
@@ -90,23 +90,6 @@ export const deleteIssue = async (id: number) => {
     }
 }
 
-export const getUserIssues = async (userId: string): Promise<Issue[]> => {
-    'use cache';
-    cacheTag(`user-issues-${userId}`);
-
-    try {
-        const userIssues = await db.query.issues.findMany({
-            where: eq(issues.userId, userId),
-            orderBy: asc(issues.createdAt),
-        })
-
-        return userIssues ?? [];
-    } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch user issues');
-    }
-};
-
 export const getIssueById = async (issueId: string): Promise<Issue> => {
     'use cache';
     cacheTag(`issue-${issueId}`);
@@ -122,5 +105,58 @@ export const getIssueById = async (issueId: string): Promise<Issue> => {
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch issue');
+    }
+};
+
+// issue group operations
+
+export const createIssueGroup = async (userId: string, name: string): Promise<Partial<IssueGroup> | null> => {
+    try {
+        await db.insert(issueGroups).values({
+            userId,
+            name,
+        })
+        return { userId, name };
+    } catch (error) {
+        console.error('Failed to create issue group', error);
+        return null;
+    }
+}
+
+export const deleteIssueGroup = async (id: number) => {
+    try {
+        await db.delete(issueGroups).where(eq(issueGroups.id, id));
+    } catch (error) {
+        console.error('Failed to delete issue group', error);
+        return null;
+    }
+}
+
+export const updateIssueGroup = async (id: number, name: string) => {
+    try {
+        await db.update(issueGroups).set({
+            name,
+            updatedAt: new Date(),
+        }).where(eq(issueGroups.id, id));
+    } catch (error) {
+        console.error('Failed to update issue group', error);
+        return null;
+    }
+}
+
+export const getUserIssueGroups = async (userId: string): Promise<IssueGroup[]> => {
+    'use cache';
+    cacheTag(`user-issues-${userId}`);
+
+    try {
+        const userIssues = await db.query.issueGroups.findMany({
+            where: eq(issueGroups.userId, userId),
+            orderBy: asc(issueGroups.createdAt),
+        })
+
+        return userIssues ?? [];
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch user issues');
     }
 };
