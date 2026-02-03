@@ -5,10 +5,8 @@ const IssuesLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className='min-h-screen'>
             <DashboardNav />
-            <main className="min-h-screen pl-14 lg:pl-64">
-                <Suspense fallback={null}>
-                    {children}
-                </Suspense>
+            <main className="relative min-h-screen pl-18 lg:pl-68 pr-4 py-4">
+                {children}
             </main>
         </div>
     )

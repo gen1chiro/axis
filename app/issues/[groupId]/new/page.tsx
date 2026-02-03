@@ -2,7 +2,7 @@ import IssueForm from "@/components/issue-form";
 
 const NewIssuePage = () => {
     return (
-        <div className="min-h-dvh bg-background flex items-center justify-center p-4 relative">
+        <div className="min-h-dvh bg-background flex items-center justify-center p-4">
             <IssueForm isEditing={ false }/>
             <div
                 className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none"

@@ -13,7 +13,7 @@ import NavButton from "@/components/nav-button";
 
 const DashboardNav = () => {
     return (
-        <aside className="fixed top-0 left-0 inset-y-0 bg-stone-200 border-r border-stone-300 w-14 lg:w-64 flex flex-col justify-between items-start py-4 px-3">
+        <aside className="fixed top-0 left-0 inset-y-0 bg-stone-200 border-r border-stone-300 w-14 lg:w-64 flex flex-col justify-between items-start py-4 px-3 z-10">
             <div className='w-full flex flex-col items-center lg:items-start gap-4'>
                 <Link
                     href={'/'}
