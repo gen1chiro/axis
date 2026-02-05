@@ -103,6 +103,8 @@ export const deleteIssueGroup = async (id: number): Promise<ActionResponse> => {
 
     try {
         const result = await deleteIssueGroupFromDB(id)
+        updateTag(`user-issue-groups-${user.userId}`)
+
         if (!result) {
             return {
                 success: false,

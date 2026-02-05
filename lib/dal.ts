@@ -130,6 +130,7 @@ export const createIssueGroup = async (userId: string, name: string): Promise<Pa
 export const deleteIssueGroup = async (id: number) => {
     try {
         await db.delete(issueGroups).where(eq(issueGroups.id, id));
+        await db.delete(issues).where(eq(issues.groupId, id));
     } catch (error) {
         console.error('Failed to delete issue group', error);
         return null;
@@ -168,7 +169,7 @@ export const getUserIssueGroups = async (userId: string): Promise<IssueGroup[]> 
 export const getIssueGroupById = async (groupId: number): Promise<IssueGroup> => {
     'use cache'
     cacheTag(`issue-group-${groupId}`);
-    
+
     try {
         const issueGroup = await db.query.issueGroups.findFirst({
             where: eq(issueGroups.id, groupId),
