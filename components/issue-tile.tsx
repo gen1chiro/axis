@@ -14,13 +14,14 @@ const IssueTile = ({ issue }: IssueTileProps) => {
         title,
         createdAt,
         status,
-        priority
+        priority,
+        groupId
     } = issue;
     const relativeDate = formatRelativeTime(createdAt);
 
     return (
         <Link
-            href={`/issues/${id}`}
+            href={`/issues/${groupId}/${id}`}
             className='w-full p-2 text-sm border-b border-dotted border-stone-300 hover:bg-stone-300 transition-colors ease-in-out grid grid-cols-6 lg:grid-cols-12 gap-4 justify-items-center items-center'>
             <h1 className='text-heading font-semibold capitalize col-span-4 lg:col-span-6 w-full text-left'>{title}</h1>
             <div className='hidden lg:block col-span-2'>

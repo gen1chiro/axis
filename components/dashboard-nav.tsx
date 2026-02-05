@@ -11,7 +11,7 @@ import NavGroups from "@/components/nav-groups";
 import NavGroupsSkeleton from "@/components/nav-groups-skeleton";
 import NavButton from "@/components/nav-button";
 
-const DashboardNav = () => {
+const DashboardNav = async  () => {
     return (
         <aside className="fixed top-0 left-0 inset-y-0 bg-stone-200 border-r border-stone-300 w-14 lg:w-64 flex flex-col justify-between items-start py-4 px-3 z-10">
             <div className='w-full flex flex-col items-center lg:items-start gap-4'>
@@ -39,6 +39,7 @@ const DashboardNav = () => {
                     <NavButton />
                 </nav>
 
+                <div className="w-full border-t border-dotted border-stone-400" />
                 <div className='w-full hidden lg:block px-3'>
                     <h1 className='text-body text-xs'>Groups</h1>
                     <Suspense fallback={<NavGroupsSkeleton />}>

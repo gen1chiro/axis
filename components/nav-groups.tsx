@@ -1,5 +1,4 @@
-import { getUserIssueGroups } from '@/lib/dal'
-import { requireAuthenticatedUser } from '@/lib/dal'
+import { requireAuthenticatedUser, getUserIssueGroups } from '@/lib/dal'
 import NavLink from '@/components/nav-link'
 
 const NavGroups = async () => {

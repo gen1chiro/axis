@@ -1,11 +1,14 @@
-import { requireAuthenticatedUser, getUserIssueGroups } from "@/lib/dal";
+import { getIssuesByGroupId } from "@/lib/dal";
 import { MdAdd } from "react-icons/md";
 import Link from "next/link";
 import IssueTile from "@/components/issue-tile";
 
-const IssueDisplay = async () => {
-    const user = await requireAuthenticatedUser();
-    const issues = await getUserIssueGroups(user.id);
+type IssueDisplayProps = {
+    groupId: number;
+}
+
+const IssueDisplay = async ({ groupId }: IssueDisplayProps) => {
+    const issues = await getIssuesByGroupId(groupId);
 
     return issues.length > 0
         ? (
@@ -18,8 +21,7 @@ const IssueDisplay = async () => {
                 </div>
                 {
                     issues.map(issue => (
-                        // <IssueTile key={issue.id} issue={issue} />
-                        <Link key={issue.id} href={`/issues/${issue.id}`}>{issue.name}</Link>
+                        <IssueTile key={issue.id} issue={issue} />
                     ))
                 }
             </div>

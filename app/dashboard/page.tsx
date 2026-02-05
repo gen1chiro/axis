@@ -1,8 +1,6 @@
 import { MdAdd } from "react-icons/md";
 import Link from "next/link";
-import React, { Suspense } from "react";
-import IssueDisplay from "@/components/issue-display";
-import IssueDisplaySkeleton from "@/components/issue-display-skeleton";
+import React from "react";
 import GroupForm from "@/components/group-form";
 
 const DashboardPage =  () => {
@@ -19,9 +17,6 @@ const DashboardPage =  () => {
                 </Link>
             </div>
             <GroupForm />
-            <Suspense fallback={<IssueDisplaySkeleton />}>
-                <IssueDisplay/>
-            </Suspense>
         </div>
     )
 }

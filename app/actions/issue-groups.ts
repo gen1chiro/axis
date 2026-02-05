@@ -66,6 +66,9 @@ export const updateIssueGroup = async (formData: FormData, id: number): Promise<
 
     try {
         const result = await updateIssueGroupInDB(id, name)
+        updateTag(`user-issue-groups-${user.userId}`)
+        updateTag(`issue-group-${id}`)
+
         if (!result) {
             return {
                 success: false,

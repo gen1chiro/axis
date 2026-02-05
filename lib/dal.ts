@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { hashPassword} from "@/lib/utils";
+import { hashPassword } from "@/lib/utils";
 import { User, IssueGroup, Issue, users, issues, issueGroups } from "@/db/schema";
 import { db } from "@/db";
 import { eq, asc } from "drizzle-orm";
@@ -26,7 +26,7 @@ export const createUser = async (email: string, password: string): Promise<Parti
     }
 }
 
-export const requireAuthenticatedUser = cache(async (): Promise<Omit<User, 'password' | 'createdAt'>> => {
+export const requireAuthenticatedUser = async (): Promise<Omit<User, 'password' | 'createdAt'>> => {
     const session = await getSession();
 
     if (!session) throw new Error('No session found');
@@ -38,7 +38,7 @@ export const requireAuthenticatedUser = cache(async (): Promise<Omit<User, 'pass
     if (!result) throw new Error('User not found');
 
     return { id: result.id, email: result.email };
-});
+};
 
 export const getUserByEmail = cache(async (email: string): Promise<User | null> => {
     try {
@@ -166,6 +166,9 @@ export const getUserIssueGroups = async (userId: string): Promise<IssueGroup[]> 
 };
 
 export const getIssueGroupById = async (groupId: number): Promise<IssueGroup> => {
+    'use cache'
+    cacheTag(`issue-group-${groupId}`);
+    
     try {
         const issueGroup = await db.query.issueGroups.findFirst({
             where: eq(issueGroups.id, groupId),
