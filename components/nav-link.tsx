@@ -31,7 +31,7 @@ const NavLink = ({ id, name }: NavLinkProps) => {
     }
 
     return (
-        <Link key={id} href={`/issues/${id}`} className={`w-full flex justify-between items-center group hover:bg-stone-300 transition-colors px-3 py-1 rounded-sm ${activeClass}`}>
+        <Link key={id} href={`/issues/${id}`} className={`w-full flex justify-between items-center group hover:bg-stone-300 transition-colors px-3 py-1 rounded-sm ${activeClass} ${isPending ? 'pointer-events-none' : ''}`}>
             <p className='text-sm'>{name}</p>
             {
                 isPending
