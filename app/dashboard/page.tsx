@@ -1,6 +1,7 @@
 import React from "react";
 import GroupForm from "@/components/group-form";
 import GroupDisplay from "@/components/group-display";
+import GroupDisplaySkeleton from "@/components/group-display-skeleton";
 import { Suspense } from "react";
 
 const DashboardPage =  () => {
@@ -16,7 +17,7 @@ const DashboardPage =  () => {
                     <h1 className='hidden md:block col-span-2'>Updated</h1>
                     <h1 className='col-span-2 w-full text-right'>Created</h1>
                 </div>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<GroupDisplaySkeleton />}>
                     <GroupDisplay />
                 </Suspense>
             </div>
