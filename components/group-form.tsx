@@ -2,7 +2,8 @@
 
 import { useCreateIssueGroup } from '@/hooks/useCreateIssueGroup'
 import { MdAdd } from 'react-icons/md'
-import React from "react";
+import React from "react"
+import Spinner from '@/components/spinner'
 
 const GroupForm = () => {
     const { formAction, isPending } = useCreateIssueGroup()
@@ -21,9 +22,14 @@ const GroupForm = () => {
                 />
                 <button
                     type='submit'
+                    disabled={ isPending }
                     className="flex items-center justify-center lg:justify-start gap-3 text-heading px-2 lg:px-3 py-1 rounded-sm text-white text-sm bg-zinc-900 hover:bg-zinc-800 transition-colors"
                 >
-                    <MdAdd className="w-4 h-4" />
+                    {
+                        isPending
+                            ? <Spinner />
+                            : <MdAdd className="w-4 h-4" />
+                    }
                     <span className='hidden sm:inline'>Create</span>
                 </button>
             </form>
